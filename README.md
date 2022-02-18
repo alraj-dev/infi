@@ -1,5 +1,10 @@
 
+
 # Infi
+
+```kotlin
+open class Infi<E> : List<E>
+```
 A Kotlin/Java `List` implementation to iterate around elements infinitely.
 
 In a normal List to loop around elements infinitely you do:
@@ -50,28 +55,29 @@ list.with(4).next()         // Element
 
 `index()` - returns the current element's index
 
+`with(index)` - set the current index to the given index, so changes the current element and position to traverse from
+
+`with(element)` - set the current index to the index of given element, so changes the current element and position to traverse from
+
 By default 0'th element is the current element. To change the default element, use with()
 ```kotlin
 val list = infiOf(1, 2, 3, 4, 5).with(index = 2)
 ```
 
-You can use all the basic functions of `List` in Infi too. But Infi does **NOT extend `List` or `Collection`**. It just has the elements in a List LOL.
+# MutableInfi:
+```kotlin
+class MutableInfi<E> : Infi<E>,MutableCollection<E>
+```
+Same as Infi but with Mutable property.
 
-MutableInfi
-=
-
-Same as Infi but with Mutable property. Can also use `MutableList`'s functions. Also MutableInfi does **NOT extend `List` or `MutableList` or `Collection`**
-
-Caution
-=
-You cannot use `Iterator`, `forEach()` or such, since this is intended for infinite loop. But you can use  `toList()` and `toMutableList()` to get the elements.
-
-Exception
-=
+# Exception
 
 You get **`TooFewElementsException()`** doing the following:
 
 - calling `next()` or `previous()`, when there is no or 1 element present.
 - calling `index()`  or `element()` when there is no element.
 
+You get **`IndexOutOfBoundException()`** doing the following:
 
+- calling `with(index)` when index is smaller than Zero or index is greater than elements size
+- calling `with(element)` when element is not present
