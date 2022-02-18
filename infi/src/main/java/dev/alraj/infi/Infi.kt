@@ -6,10 +6,10 @@ import kotlin.jvm.Throws
 open class Infi<E>(private val _elements: List<E>) : List<E> {
     private var currentElementIndex: Int = 0
     private val currentElement: E 
-    	get() = _elements[currentElementIndex]
+        get() = _elements[currentElementIndex]
 
     override val size: Int
-    	get() = _elements.size
+        get() = _elements.size
 
     @Throws(TooFewElementsException::class)
     fun index(): Int {
