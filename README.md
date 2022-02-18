@@ -5,7 +5,7 @@
 ```kotlin
 open class Infi<E> : List<E>
 ```
-A Kotlin/Java `List` implementation to iterate around elements infinitely.
+A Kotlin `List` implementation to iterate around elements infinitely.
 
 In a normal List to loop around elements infinitely you do:
 
