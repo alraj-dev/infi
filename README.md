@@ -19,7 +19,7 @@ allprojects {
 }
 ```
 
-and in your module `build.gradle` file: Latest version: **`1.0`**
+and in your module `build.gradle` file: Latest version: **`1.0.0`**
 ```groovy
 dependencies {
   implementation 'com.github.alraj-dev:infi:latest-version'
