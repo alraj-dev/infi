@@ -1,10 +1,5 @@
-
-
 # Infi
 
-```kotlin
-open class Infi<E> : List<E>
-```
 A Kotlin `List` implementation to iterate around elements infinitely.
 
 # Add to your project:
@@ -19,19 +14,22 @@ allprojects {
 }
 ```
 
-and in your module `build.gradle` file: Latest version: **`1.0.0`**
+and in your module `build.gradle` file: Latest version: **`1.1.0`**
 ```groovy
 dependencies {
   implementation 'com.github.alraj-dev:infi:latest-version'
 }
 ```
 
-In a normal List to loop around elements infinitely you do:
+# Demo:
 
-
+Consider the following list:
 ```kotlin
 val list = listOf(1, 2, 3, 4, 5)
+```
+In a normal case to loop around elements infinitely you do:
 
+```kotlin
 //Backwards
 if(currentIndex == 0)
     currentIndex = list.lastIndex
@@ -46,57 +44,70 @@ else
 ```
 
 But with Infi, it is simple:
+
 ```kotlin
 val list = infiOf(1, 2, 3, 4, 5)
+```
+use `infiOf` instead of `listOf`
 
-//Backwards
+```kotlin
+//Backward by single element
 list.previous()
-
-//Forwards
+//Forward by single element
 list.next()
-```
-internally it is the same `if` condition, but this is easy right? :)
 
-You can also start looping from a specific index or element:
+// go beyond single element
+list.next(3)     // go to 3rd next element
+list.previous(4) // go to 4th previous element
+```
+
+`next(increment: Int)` - goes to the nth next element and returns it. (default increment value is 1)
+
+`previous(decrement: Int)` - goes to the nth previous element and returns it. (default decrement value is 1)
+
+since this is a infinite loop list, increment or decrement beyond the element size, loops back just like a normal `next` or `previous` function.
+
 ```kotlin
-val list = infiOf(1, 2, 3, 4, 5)
-
-// well both index and element is Int, so use named parameter
-list.with(index = 3).next() // Index
-list.with(4).next()         // Element
+list.next(17)      // Gets 2, loops around with the increment
+list.previous(198) // Gets 3
 ```
 
-`next()` - goes to the next element and returns it
+The default element is the 0th element, to change the default element use `with()`.  You can start looping from a specific index or element:
+```kotlin
+val list = infiOf(1, 2, 3, 4, 5).with(index = 2)
 
-`previous()` - goes to the previous element and returns it
-
-`element()` - returns the current element
-
-`index()` - returns the current element's index
-
+// By Index, use named parameter when Elements are Int
+// Because both index parameter and element parameter will be Int
+list.with(index = 3).next() // Gets 5
+// By Element
+list.with(4).next()         // Gets 5
+```
 `with(index)` - set the current index to the given index, so changes the current element and position to traverse from
 
 `with(element)` - set the current index to the index of given element, so changes the current element and position to traverse from
 
-By default 0'th element is the current element. To change the default element, use with()
+other functions:
+-
+`element()` - returns the current element
+
+`index()` - returns the current element's index
+
+and all `List` functions available in Kotlin, since `Infi` extends `List`
+
 ```kotlin
-val list = infiOf(1, 2, 3, 4, 5).with(index = 2)
+open class Infi<E> : List<E>
 ```
 
 # MutableInfi:
 ```kotlin
-class MutableInfi<E> : Infi<E>,MutableCollection<E>
+class MutableInfi<E> : Infi<E>,MutableList<E>
 ```
-Same as Infi but with Mutable property.
+Same as `Infi` but with Mutable property, you can use all `MutableList` functions available in Kotlin.
 
 # Exception
-
-You get **`TooFewElementsException()`** doing the following:
-
-- calling `next()` or `previous()`, when there is no or 1 element present.
-- calling `index()`  or `element()` when there is no element.
-
 You get **`IndexOutOfBoundException()`** doing the following:
 
+- calling `next()` or `previous()`, when there is no element present.
+- calling `index()`  or `element()` when there is no element.
 - calling `with(index)` when index is smaller than Zero or index is greater than elements size
 - calling `with(element)` when element is not present

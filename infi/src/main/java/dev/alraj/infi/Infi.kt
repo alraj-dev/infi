@@ -4,44 +4,49 @@ import java.lang.IndexOutOfBoundsException
 import kotlin.jvm.Throws
 
 open class Infi<E>(private val _elements: List<E>) : List<E> {
-    private var currentElementIndex: Int = 0
-    private val currentElement: E 
+    protected var currentElementIndex: Int = 0
+    private val currentElement: E
         get() = _elements[currentElementIndex]
 
     override val size: Int
         get() = _elements.size
 
-    @Throws(TooFewElementsException::class)
+    @Throws(IndexOutOfBoundsException::class)
     fun index(): Int {
-        if(size < 1) throw TooFewElementsException("Cannot get Index, there are no elements")
+        if(size < 1) throw IndexOutOfBoundsException("Cannot get Index, there are no elements")
 
         return currentElementIndex
     }
 
+    @Throws(IndexOutOfBoundsException::class)
     fun element(): E {
-        if(size < 1) throw TooFewElementsException("Cannot get Element, there are no elements")
+        if(size < 1) throw IndexOutOfBoundsException("Cannot get Element, there are no elements")
 
         return currentElement
     }
 
-    @Throws(TooFewElementsException::class)
-    fun previous(): E {
-        if(size < 2) throw TooFewElementsException(size)
+    @Throws(IndexOutOfBoundsException::class)
+    fun previous(decrement: Int = 1): E {
+        if(size < 1) throw IndexOutOfBoundsException("Nothing to go previous, there are no elements")
 
-        if(currentElementIndex == 0)
-            currentElementIndex = _elements.lastIndex
-        else currentElementIndex--
+        val tempIndex = currentElementIndex - (decrement % size)
+        currentElementIndex = if(tempIndex >= 0)
+            tempIndex
+        else
+            size + tempIndex
 
         return currentElement
     }
 
-    @Throws(TooFewElementsException::class)
-    fun next(): E {
-        if(size < 2) throw TooFewElementsException(size)
+    @Throws(IndexOutOfBoundsException::class)
+    fun next(increment: Int = 1): E {
+        if(size < 1) throw IndexOutOfBoundsException("Nothing to go previous, there are no elements")
 
-        if(currentElementIndex == _elements.lastIndex)
-            currentElementIndex = 0
-        else currentElementIndex++
+        val tempIndex = (currentElementIndex + (increment % size)) - size
+        currentElementIndex = if(tempIndex < 0)
+            size + tempIndex
+        else
+            tempIndex
 
         return currentElement
     }
@@ -50,7 +55,7 @@ open class Infi<E>(private val _elements: List<E>) : List<E> {
     fun with(element: E): Infi<E> {
         val index = indexOf(element)
         if(index < 0)
-            throw IndexOutOfBoundsException("Element not present in this Infi")
+            throw IndexOutOfBoundsException("Given element is not present in the Infi")
 
         currentElementIndex = index
         return this
