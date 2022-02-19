@@ -7,6 +7,25 @@ open class Infi<E> : List<E>
 ```
 A Kotlin `List` implementation to iterate around elements infinitely.
 
+# Add to your project:
+
+In your root `build.gradle` file:
+```groovy
+allprojects {
+  repositories {
+    ...
+    maven { url 'jitpack.io' }
+  }
+}
+```
+
+and in your module `build.gradle` file: Latest version: **`1.0`**
+```groovy
+dependencies {
+  implementation 'com.github.alraj-dev:infi:latest-version'
+}
+```
+
 In a normal List to loop around elements infinitely you do:
 
 
