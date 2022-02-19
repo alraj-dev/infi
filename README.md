@@ -61,9 +61,9 @@ list.next(3)     // go to 3rd next element
 list.previous(4) // go to 4th previous element
 ```
 
-`next(increment: Int)` - goes to the nth next element and returns it. (default increment value is 1)
+`next(n: Int)` - goes to the nth next element and returns it. (default n value is 1)
 
-`previous(decrement: Int)` - goes to the nth previous element and returns it. (default decrement value is 1)
+`previous(n: Int)` - goes to the nth previous element and returns it. (default n value is 1)
 
 since this is a infinite loop list, increment or decrement beyond the element size, loops back just like a normal `next` or `previous` function.
 

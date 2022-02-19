@@ -26,10 +26,10 @@ open class Infi<E>(private val _elements: List<E>) : List<E> {
     }
 
     @Throws(IndexOutOfBoundsException::class)
-    fun previous(decrement: Int = 1): E {
+    fun previous(n: Int = 1): E {
         if(size < 1) throw IndexOutOfBoundsException("Nothing to go previous, there are no elements")
 
-        val tempIndex = currentElementIndex - (decrement % size)
+        val tempIndex = currentElementIndex - (n % size)
         currentElementIndex = if(tempIndex >= 0)
             tempIndex
         else
@@ -39,10 +39,10 @@ open class Infi<E>(private val _elements: List<E>) : List<E> {
     }
 
     @Throws(IndexOutOfBoundsException::class)
-    fun next(increment: Int = 1): E {
+    fun next(n: Int = 1): E {
         if(size < 1) throw IndexOutOfBoundsException("Nothing to go previous, there are no elements")
 
-        val tempIndex = (currentElementIndex + (increment % size)) - size
+        val tempIndex = (currentElementIndex + (n % size)) - size
         currentElementIndex = if(tempIndex < 0)
             size + tempIndex
         else
